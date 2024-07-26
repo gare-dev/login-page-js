@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="items-center flex-col flex pt-20">
+      <h2 id="textTxt" class="pb-10">You are not logged in.</h2>
+      <h2 id="warningTxt" class="pb-20 text-red-500 hidden">
+        You need to fill the form.
+      </h2>
+
+      <form class="grid gap-10">
+        <div class="grid gap-3 ml-20 mr-20">
+          <input
+            id="loginTxt"
+            placeholder="Login"
+            class="border-solid border-black border-2 p-2 rounded-lg"
+            type="text"
+          />
+          <input
+            id="passTxt"
+            placeholder="Password"
+            class="border-solid border-black border-2 p-2 rounded-lg"
+            type="text"
+          />
+        </div>
+
+        <div class="flex items-center flex-col gap-4">
+          <input
+            id="enterBtt"
+            class="border-2 cursor-pointer h-16 w-56 border-blue-600 bg-blue-600 text-white rounded-xl hover:h-20 hover:w-60 text-xl text-center"
+            type="button"
+            value="Enter"
+          />
+          <input
+            id="exitBtt"
+            class="border-2 cursor-pointer h-16 w-56 border-red-600 bg-red-600 text-white rounded-xl hover:h-20 hover:w-60 text-xl text-center"
+            type="button"
+            value="Exit"
+          />
+        </div>
+      </form>
+    </div>
+  </body>
+
+  <script src="script.js"></script>
+</html>
