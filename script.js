@@ -20,15 +20,18 @@ const checkNull = (login, password) => {
 };
 
 // TODO
-// Terminar confirmação se usuario existe
 // Adicionar register
 // Exit button
+// Vide bug
+
+// BUG
+
 
 const alreadyLogged = () => {
   for (let i = 0; i < localStorage.length; i++) {
     if (localStorage.getItem(`Login ${i}`) === loginTxt.value) {
       console.log(
-        "This user is alread registered as:",
+        "This user is already registered as:",
         localStorage.getItem(`Login ${i}`)
       );
       return false;
@@ -36,9 +39,20 @@ const alreadyLogged = () => {
   }
 };
 
-const checkPassword = () => {
-  if (passTxt.value.length < 5) {
+const rememberCount = () => {
+  for (let i = 0; i < localStorage.length; i++) {
+    if (localStorage.getItem(`Login ${i}`) === null) {
+      return true;
+    } else if (localStorage.getItem(`Login ${i}`).length > 0) {
+      counter++;
+    }
+  }
+};
+
+const checkPassword = (password, login) => {
+  if (password.length < 5 || login.length < 4) {
     console.log("Please insert a bigger password.");
+    return false;
   }
 };
 
@@ -52,6 +66,14 @@ enterBtt.addEventListener("click", () => {
     return;
   }
 
+  if (rememberCount() === false) {
+    return;
+  }
+
+  if (checkPassword(passTxt.value, loginTxt.value) === false) {
+    return;
+  }
+
   userData = {
     id: counter++,
     login: loginTxt.value,
@@ -62,7 +84,6 @@ enterBtt.addEventListener("click", () => {
   localStorage.setItem(`Password ${userData.id}`, userData.password);
   //  textTxt.innerHTML = `Hello, ${userData.login}!`
   warningTxt.classList.add("hidden");
-  console.log(userData.password.length);
 });
 
 exitBtt.addEventListener("click", () => {});
