@@ -5,15 +5,16 @@ const warningTxt = document.getElementById("warningTxt");
 
 const loginTxt = document.getElementById("loginTxt");
 const passTxt = document.getElementById("passTxt");
+const hintTxt = document.getElementById("hintTxt");
 
 const enterBtt = document.getElementById("enterBtt");
-const exitBtt = document.getElementById("exitBtt");
+// const exitBtt = document.getElementById("exitBtt");
 
 let userData = {};
 let counter = 0;
 
-const checkNull = (login, password) => {
-  if (login === "" || password === "") {
+const checkNull = (login, password, hint) => {
+  if (login === "" || password === "" || hint === "") {
     warningTxt.classList.remove("hidden");
     return true;
   }
@@ -22,18 +23,17 @@ const checkNull = (login, password) => {
 // TODO
 // Adicionar register
 // Exit button
-// Vide bug
 
 // BUG
-
 
 const alreadyLogged = () => {
   for (let i = 0; i < localStorage.length; i++) {
     if (localStorage.getItem(`Login ${i}`) === loginTxt.value) {
       console.log(
-        "This user is already registered as:",
+        "This user is already logged in as:",
         localStorage.getItem(`Login ${i}`)
       );
+      warningTxt.innerHTML = "This user is not available.";
       return false;
     }
   }
@@ -45,20 +45,26 @@ const rememberCount = () => {
       return true;
     } else if (localStorage.getItem(`Login ${i}`).length > 0) {
       counter++;
+      
     }
   }
 };
 
-const checkPassword = (password, login) => {
-  if (password.length < 5 || login.length < 4) {
-    console.log("Please insert a bigger password.");
+const checkPassword = (password, login, hint) => {
+  if (password.length < 5) {
+    console.log("Please enter a longer password.");
     return false;
+  } else if (login.length < 5) {
+    console.log("Please enter a longer login.");
+    return false;
+  } else if (hint.length < 3) {
+    console.log("Please enter a longer hint.");
   }
 };
 
 enterBtt.addEventListener("click", () => {
-  if (checkNull(loginTxt.value, passTxt.value)) {
-    console.log("You need to fill the data");
+  if (checkNull(loginTxt.value, passTxt.value, hintTxt.value)) {
+    console.log("You need to fill in the data.");
     return;
   }
 
@@ -70,20 +76,24 @@ enterBtt.addEventListener("click", () => {
     return;
   }
 
-  if (checkPassword(passTxt.value, loginTxt.value) === false) {
+  if (checkPassword(passTxt.value, loginTxt.value, hintTxt.value) === false) {
     return;
   }
 
   userData = {
-    id: counter++,
+    id: counter,
     login: loginTxt.value,
     password: passTxt.value,
+    hint: hintTxt.value
   };
 
   localStorage.setItem(`Login ${userData.id}`, userData.login);
   localStorage.setItem(`Password ${userData.id}`, userData.password);
-  //  textTxt.innerHTML = `Hello, ${userData.login}!`
+  localStorage.setItem(`Hint ${userData.id}`, userData.hint)
   warningTxt.classList.add("hidden");
 });
 
-exitBtt.addEventListener("click", () => {});
+/*exitBtt.addEventListener("click", () => {
+  textTxt.innerHTML = `You are not logged in.`;
+});
+*/
